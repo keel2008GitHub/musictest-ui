@@ -161,7 +161,8 @@
                 this.playType = false
                 this.openType = false
                 let that = this;
-                that.num = 16;
+                // 录音时间长度
+                that.num = 22;
                 HZRecorder.get(function (rec) {
                     that.recorder = rec;
                     that.recorder.start();
