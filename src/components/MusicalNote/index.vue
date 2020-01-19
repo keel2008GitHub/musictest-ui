@@ -10,7 +10,7 @@
 /* eslint-disable*/
 <template>
   <div ref="canvasWrap" :style="'width:'+width+'px'" class="canvasWrap">
-    <!-- <div style="width:3225px;height: 15px;position:absolute;left: 0;top:276px;background:red;opacity: 0.8;z-index: 10;"></div> -->
+    <div class="moveLine" :class="{'moveAn':moveAnType}"></div>
     <canvas
       :style="{'background':backgroudColor,'width':'3225px','height':this.canvasHeight+'px'}"
       ref="musicalCanvas"
@@ -21,9 +21,10 @@
 <script>
 export default {
   props: {
+    moveAnType:Boolean,
     backgroudColor:{
       type:String,
-      default:'#333'
+      default:'#FFFFFF'
     },
     /** canvas的宽度的颜色*/
     width: {
@@ -60,19 +61,19 @@ export default {
 
     curveLineColor: {
       type: String,
-      default: "#fff"
+      default: "#9999FF"
     },
     /** 点的颜色*/
 
     dotColor: {
       type: String,
-      default: "#fff"
+      default: "#9999FF"
     },
     /** 点的大小*/
 
     dotSize: {
       type: Number,
-      default: 7
+      default: 4
     },
     dotIndexList: {
       type: Array,
@@ -89,6 +90,7 @@ export default {
   },
   data() {
     return {
+      // moveAnType:false,
       canvasWidth: 3225,
       ctx: "",
       xCoordinate: [],
@@ -169,7 +171,7 @@ export default {
 
     drawTitle() {
       this.leftTitle.map((index, item) => {
-        this.ctx.fillStyle = "white";
+        this.ctx.fillStyle = "#fff";
         this.ctx.textAlign = "center";
         this.ctx.fillText(
           item,
@@ -178,7 +180,7 @@ export default {
         );
       });
       this.bottomTitle.map((index, item) => {
-        this.ctx.fillStyle = "white";
+        this.ctx.fillStyle = "#333333";
         this.ctx.fillText(
           (item + 1)*0.25,
           this.spanX * index + this.spanX / 2.0,
@@ -485,6 +487,7 @@ export default {
       });
       this.$emit("onChange", list);
       console.log("list==========",list)
+     
     },
 
     /**
