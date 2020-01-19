@@ -112,16 +112,18 @@
                 if (my_audio.paused) {
                     console.log('play has been paused.')
                     that.timeType = 0
-                    setTimeout(function () { //混音前奏3s
-                        console.log("timeType", that.timeType)
-                        if (that.timeType == 0) {
-                            // setTimeout(function(){
-                            that.moveAnType = true
-                            // },4000)
-                        } else {
-                            that.moveAnType = false
-                        }
-                    }, 4000);
+                    // 注释掉还不完善的滚动条代码,
+                    // 这个moveAnType一旦被设置成 true, 就会滚动.
+                    // setTimeout(function () { //混音前奏3s
+                    //     console.log("timeType", that.timeType)
+                    //     if (that.timeType == 0) {
+                    //         // setTimeout(function(){
+                    //         that.moveAnType = true
+                    //         // },4000)
+                    //     } else {
+                    //         that.moveAnType = false
+                    //     }
+                    // }, 4000);
 
                     my_audio.play();
                     that.playStatus = 'doing';

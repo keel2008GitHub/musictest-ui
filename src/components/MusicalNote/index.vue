@@ -10,7 +10,8 @@
 /* eslint-disable*/
 <template>
   <div ref="canvasWrap" :style="'width:'+width+'px'" class="canvasWrap">
-    <div class="moveLine" :class="{'moveAn':moveAnType}"></div>
+<!--      注释掉还不完善的进度条-->
+<!--    <div class="moveLine" :class="{'moveAn':moveAnType}"></div>-->
     <canvas
       :style="{'background':backgroudColor,'width':'3225px','height':this.canvasHeight+'px'}"
       ref="musicalCanvas"
