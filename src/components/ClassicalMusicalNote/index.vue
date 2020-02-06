@@ -96,7 +96,7 @@ export default {
       ctx: "",
       xCoordinate: [],
       yCoordinate: [],
-      spanX: 25,
+	  spanX: 3225/145,
       spanY: 15,
       leftTitle: [],
       bottomTitle: [],
@@ -142,8 +142,9 @@ export default {
 
     createTitle() {
       let xList = [];
-      for (let x = 1; x <= 128; x++) {
+      for (let x = -16; x <= 127; x++) {
         xList.push(x);
+		console.log(x + "\n");
       }
 
       let yList = [];
@@ -180,11 +181,11 @@ export default {
           this.height - index * this.spanY - this.offsetY - 4
         );
       });
-      this.bottomTitle.map((index, item) => {
+      this.bottomTitle.map((item, index) => {
         this.ctx.fillStyle = "#333333";
         this.ctx.fillText(
-          (item + 1)*0.25,
-          this.spanX * index + this.spanX / 2.0,
+          (item)*0.25,
+          this.spanX * (index+1) + this.spanX / 2.0,
           this.height - 4
         );
         this.ctx.textAlign = "center";
@@ -198,6 +199,7 @@ export default {
     drawCoordinateLine() {
       // 绘制坐标横线
       this.leftTitle.map((index, item) => {
+		 
         let x1 = 0;
         let y1 = this.height - index * this.spanY - this.offsetY;
         let x2 = this.canvasWidth;
@@ -219,10 +221,10 @@ export default {
         this.ctx.closePath();
       });
       // 绘制坐标竖线
-      this.bottomTitle.map((index, item) => {
-        let x1 = index * this.spanX;
+      this.bottomTitle.map((item, index ) => {
+        let x1 = (index+1) * this.spanX;
         let y1 = 0;
-        let x2 = index * this.spanX;
+        let x2 = (index+1) * this.spanX;
         let y2 = this.canvasHeight;
         this.ctx.strokeStyle = this.ylineColor;
 
@@ -315,7 +317,9 @@ export default {
     addDot(e) {
       if (e.offsetX && e.offsetY) {
         let x = e.offsetX;
+		console.log("e.offsetx = "+ x)
         let y = e.offsetY;
+		console.log("e.offsety = "+ y)
         if (x < this.spanX) {
           return;
         }
@@ -477,14 +481,27 @@ export default {
      */
     dotListToIndexList() {
       let list = this.dotList.map(item => {
-        let xIndex = parseInt((item.x - this.spanX) / this.spanX);
-        let yIndex = parseInt(
-          (this.canvasHeight - item.y - this.spanY) / this.spanY
-        );
-        return {
-          x: xIndex,
-          y: yIndex
-        };
+		console.log("the itemx is " + item.x);
+		console.log("the itemy is " + item.y);
+		console.log("the span x is " + this.spanX);
+		let yIndex = parseInt(
+		  (this.canvasHeight - item.y - this.spanY) / this.spanY
+		);
+		if ((item.x - this.spanX*19 )<= 0) {
+			let xIndex = parseInt((item.x - this.spanX*19)  / this.spanX);
+			return {
+			  x: xIndex,
+			  y: yIndex
+			};
+		}else{
+			let xIndex = parseInt((item.x - this.spanX*18) / this.spanX);
+			return {
+			  x: xIndex,
+			  y: yIndex
+			};
+		}
+
+
       });
       this.$emit("onChange", list);
       console.log("list==========",list)
@@ -497,8 +514,8 @@ export default {
      */
     indexListToDotList(list) {
       this.dotList = list.map(item => {
-        let x = item.x * this.spanX + this.spanX + this.spanX / 2.0;
-        let y =
+        let x = item.x * this.spanX + 18*this.spanX + this.spanX / 2.0;
+        let y = 
           this.canvasHeight -
           (item.y * this.spanY + this.spanY + this.spanY / 2.0 + this.offsetY - 0.5);
         return {

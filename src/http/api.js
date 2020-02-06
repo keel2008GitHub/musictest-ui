@@ -1,4 +1,6 @@
 export default {
     humming:'/humming',
-    mix:'/mix'
+    mix:'/mix',
+    hummingAd:'/hummingAd',
+    mixAd:'/mixAd',
 }
