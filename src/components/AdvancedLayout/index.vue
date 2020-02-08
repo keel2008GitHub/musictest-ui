@@ -6,7 +6,7 @@
         <div v-if="aboutType" class="aboutMask">
             <div class="aboutMes">
                 <i class="closeIco" @click="closeIcoClick"></i>
-				<p>1. Change mode by clicking on pen/eraser icon</p>
+                <p>1. Change mode by clicking on pen/eraser icon</p>
                 <p>2. Swipe across the bounded area to draw/remove notes </p>
                 <p>3. Click the mixer icon to compose</p>
                 <p>4. Click the play button to listen to the piece </p>
@@ -20,7 +20,8 @@
             </div>
             <div id="app">
 
-                <AdvancedMusicalNote :moveAnType="moveAnType" :dotIndexList="dotList" :modeofapp="removing" @onChange="getAllPosition"/>
+                <AdvancedMusicalNote :moveAnType="moveAnType" :dotIndexList="dotList" :modeofapp="removing"
+                                     @onChange="getAllPosition"/>
                 <div class="positionMes">
                     <ul>
                         <li v-for="(item,index) in dispalyList" :key="index">
@@ -43,12 +44,22 @@
                     <span v-else style="opacity: 0.5;cursor: not-allowed;"><i class="deleteIcon icon"></i></span>
                     <audio v-if="audioType" id="my_audio" :src="audio_url"></audio>
                     <!-- <audio v-if="audioType" controls id="my_audio" :src="audio_url"></audio> -->
-					
-					<span v-if="openType" @click="aboutClick">help</span>
-					<span v-else style="opacity: 0.5;cursor: not-allowed;">help</span>
-					
-                    <span v-if="openType" @click="modeChange"><i :class="[removing? 'removeIcon' : 'drawIcon', 'icon']"></i></span>
-                    <span v-else style="opacity: 0.5;cursor: not-allowed;"><i class="drawIcon icon"></i></span>
+
+                    <span v-if="openType" @click="aboutClick">help</span>
+
+                    <span v-else style="opacity: 0.5;cursor: not-allowed;">help</span>
+
+
+                    <span v-if="openType" @click="modeChange"><i
+                            :class="[removing? 'removeIcon' : 'drawIcon', 'icon']"></i></span>
+
+                    <span v-else style="opacity: 0.5;cursor: not-allowed;"><i
+                            class="drawIcon icon"></i></span>
+
+                    <span v-if="openType"><a :href="advanced_final_version_url"><i
+                            class="downloadIcon icon"></i></a> </span>
+
+
                 </div>
             </div>
         </div>
@@ -61,7 +72,7 @@
     import AdvancedMusicalNote from '../AdvancedMusicalNote/index'
     import transform from '../../js/transform'
     import config from '../../config'
-	import {mixAd, humming} from '../../http/methods.js'
+    import {mixAd, humming} from '../../http/methods.js'
 
     export default {
         components: {
@@ -69,9 +80,9 @@
         },
         data() {
             return {
-				initialized: false,
-				mixType: false,
-				removing: false,
+                initialized: false,
+                mixType: false,
+                removing: false,
                 timeType: 0,
                 moveAnType: false,
                 playType: false,
@@ -80,7 +91,8 @@
                 maskType: false,
                 openType: true,
                 baseURL: config.baseURL,
-                audio_url: config.baseURL + '/static/finalversion.wav',
+                audio_url: config.baseURL + '/static/finalversionAd.wav',
+                advanced_final_version_url: config.baseURL + '/downloadAd',
                 dotList: [],
                 lineData: ["None", "C-3", "D-3", "E-3", "F-3", "G-3", "A-3", "B-3", "C-4", "D-4", "E-4", "F-4", "G-4", "A-4", "B-4", "C-5"],
                 params: {
@@ -92,10 +104,9 @@
                 playStatus: 'over'
             }
         },
-		watch:{
-
-		},
+        watch: {},
         methods: {
+
             closeIcoClick() {
                 //关闭about弹框
                 this.aboutType = false
@@ -104,9 +115,9 @@
                 //about按钮
                 this.aboutType = true
             },
-			modeChange(){
-				this.removing = !this.removing
-			},
+            modeChange() {
+                this.removing = !this.removing
+            },
             handlerPlay() {
                 // 播放
                 console.log("走着路--------------")
@@ -121,15 +132,15 @@
                     // 注释掉还不完善的滚动条代码,
                     // 这个moveAnType一旦被设置成 true, 就会滚动.
                     setTimeout(function () { //混音前奏3s
-                         console.log("timeType", that.timeType)
-                         if (that.timeType == 0) {
-                             // setTimeout(function(){
-                             that.moveAnType = true
-                             // },4000)
-                         } else {
-                             that.moveAnType = false
-                         }
-                     }, 2400);
+                        console.log("timeType", that.timeType)
+                        if (that.timeType == 0) {
+                            // setTimeout(function(){
+                            that.moveAnType = true
+                            // },4000)
+                        } else {
+                            that.moveAnType = false
+                        }
+                    }, 2400);
 
                     my_audio.play();
                     that.playStatus = 'doing';
@@ -152,7 +163,7 @@
             },
             deleteData() {
                 this.playType = false
-				this.mixType = false
+                this.mixType = false
                 this.dotList = [];
                 this.dispalyList = []
                 this.params = {"notes": []}
@@ -171,7 +182,7 @@
              * 数据返回服务器
              * */
             mixHas() {
-				this.initialized = true;
+                this.initialized = true;
                 this.maskType = true;
                 this.audioType = false;
                 console.log("the parameter is " + this.params);
@@ -189,9 +200,9 @@
                 })
             },
             getAllPosition(list) {
-				if (this.initialized == false){
-				  this.playType = false
-				}
+                if (this.initialized == false) {
+                    this.playType = false
+                }
 
                 let my_audio = document.querySelector("#my_audio");
                 my_audio.pause();
@@ -200,14 +211,13 @@
                 this.playStatus = 'over'
                 /** 点击的数据转为服务器要的数据*/
                 this.params.notes = transform.positionListToYinList(list, this.lineData)
-				console.log("param" + this.params.notes)
-				if (this.params.notes.length > 0 )
-				{
-					this.mixType = true
-				}else{
-					this.mixType = false
-				}
-				
+                console.log("param" + this.params.notes)
+                if (this.params.notes.length > 0) {
+                    this.mixType = true
+                } else {
+                    this.mixType = false
+                }
+
                 /** 点击的数据转为显示的数据*/
                 this.dispalyList = transform.yinListToDisplayList(this.params.notes, this.lineData)
             }
@@ -318,7 +328,6 @@
     }
 
     c
-
     i.icon {
         display: inline-block;
         width: 20px;
@@ -337,8 +346,7 @@
         background: url("../../assets/shanchu.png") no-repeat;
         background-size: 100%;
     }
-	
-	
+
 
     i.over {
         background: url("../../assets/bofang_1.png") no-repeat;
@@ -357,17 +365,23 @@
         margin-left: 1px;
         margin-top: 6px;
     }
-	
-	i.drawIcon {
-	    background: url("../../assets/drawer.png") no-repeat;
-	    background-size: 100%;
-	}
-	
-	i.removeIcon{
-		background: url("../../assets/eraser.png") no-repeat;
-		background-size: 100%;
-	}
-	
+
+    i.drawIcon {
+        background: url("../../assets/drawer.png") no-repeat;
+        background-size: 100%;
+    }
+
+    i.downloadIcon {
+        background: url("../../assets/download.svg") no-repeat;
+        background-size: 100%;
+    }
+
+
+    i.removeIcon {
+        background: url("../../assets/eraser.png") no-repeat;
+        background-size: 100%;
+    }
+
 
     .title {
         width: 1000px;
@@ -458,14 +472,14 @@
     /* 总时长 41s*/
     .moveAn {
         animation: mymove 41s linear;
-		animation-iteration-count: 2;
+        animation-iteration-count: 2;
 
         -moz-animation: mymove 41s linear;
-		-moz-animation-iteration-count: 2;
+        -moz-animation-iteration-count: 2;
         -webkit-animation: mymove 41s linear;
-		-webkit-animation-iteration-count: 2;
+        -webkit-animation-iteration-count: 2;
         -o-animation: mymove 41s linear;
-		-o-animation-iteration-count: 2;
+        -o-animation-iteration-count: 2;
     }
 
     @keyframes mymove {

@@ -1,6 +1,6 @@
 /**
  * @name 音乐乐谱手动谱曲工具
- * example 
+ * example
  * 事件 mouseEvent  鼠标移动事件{x,y,event}
  * 事件 onChange 点位置或者数量改变事件
  * 属性 dotIndexList 传递坐标值[{x1,y1},{x2,y2}]
@@ -91,7 +91,7 @@ export default {
       type: Boolean,
       default: false
     }
- 
+
   },
   data() {
     return {
@@ -120,7 +120,7 @@ export default {
     /*
      * 监听外部传递的参数值
      */
-	
+
     dotIndexList: function(list) {
       this.indexListToDotList(list);
     },
@@ -233,7 +233,7 @@ export default {
 		this.ctx.moveTo(x1, y1);
 		this.ctx.lineTo(x2, y2);
 		this.ctx.stroke();
-		this.ctx.closePath();	
+		this.ctx.closePath();
 		}
 		});
 		this.ctx.strokeStyle = "#000000";
@@ -249,7 +249,7 @@ export default {
 		this.ctx.stroke();
 		this.ctx.closePath();
 
-      
+
     },
 
     /**
@@ -266,7 +266,7 @@ export default {
           /** 动态计算二次贝塞尔曲线控制点*/
           let c1 = {
             x: dot1.x,
-            y: dot1.y 
+            y: dot1.y
           };
           let c2 = {
             x: dot2.x,
@@ -288,11 +288,11 @@ export default {
           } else if (dot2.y > dot1.y) {
             c1 = {
               x: dot1.x +  deltaX/4.0,
-              y: dot1.y 
+              y: dot1.y
             };
             c2 = {
               x: dot2.x -  deltaX/4.0,
-              y: dot2.y 
+              y: dot2.y
             };
           }
 
@@ -372,7 +372,7 @@ export default {
 	onMouseOut(e){
 		this.recording = false
 	},
-		
+
     addDot(e) {
 	 if (this.modeofapp == false) {
       if (e.offsetX && e.offsetY) {
@@ -438,14 +438,14 @@ export default {
             replaceIndex = index;
           }
         });
-          
+
         if (isResult) {
           this.dotList.splice(replaceIndex, 1);
           this.dotList.sort(($1, $2) => {
             return $1.x - $2.x;
           });
-          
-    
+
+
           this.redraw();
            if(this.lockView){
             this.scrollToMid(dot.x, dot.y);
@@ -558,7 +558,7 @@ export default {
       });
       this.$emit("onChange", list);
       console.log("list==========",list)
-     
+
     },
 
     /**
@@ -572,7 +572,7 @@ export default {
         x = item.x * this.spanX + 2*this.spanX + this.spanX / 2.0;
 		}
 		else {
-		x = parseInt(item.x * 0.5) * this.spanX + 2*this.spanX + this.spanX / 2.0;	
+		x = parseInt(item.x * 0.5) * this.spanX + 2*this.spanX + this.spanX / 2.0;
 		}
         let y =
           this.canvasHeight -
@@ -588,7 +588,7 @@ export default {
 
      /**
      * 鼠标监听事件
-     * 
+     *
      */
 
     onMouseEvent(e){
@@ -597,20 +597,20 @@ export default {
 		   	 this.removeDot(e)
 			 }
 	   else{
-				 
+
 			this.addDot(e)
 	   }
 
-	
+
 		}
-        
+
 	  }
 
 
 
 
 
-    
+
   }
 };
 </script>

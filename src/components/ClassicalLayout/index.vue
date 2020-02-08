@@ -47,6 +47,8 @@
                     <!-- <audio v-if="audioType" controls id="my_audio" :src="audio_url"></audio> -->
                     <span v-if="openType" @click="aboutClick">help</span>
                     <span v-else style="opacity: 0.5;cursor: not-allowed;">help</span>
+                    <span v-if="openType"><a :href="classical_final_version_url" download><i
+                            class="downloadIcon icon"></i></a> </span>
                 </div>
             </div>
         </div>
@@ -77,6 +79,7 @@
                 openType: true,
                 baseURL: config.baseURL,
                 audio_url: config.baseURL + '/static/finalversion.wav',
+                classical_final_version_url: config.baseURL + '/download',
                 dotList: [],
                 lineData: ["None", "B-1", "C-2", "D-2", "E-2", "F-2", "G-2", "A-2", "B-2", "C-3", "D-3", "E-3", "F-3", "G-3", "A-3", "B-3", "C-4", "D-4", "E-4", "F-4", "G-4", "A-4", "B-4", "C-5", "D-5", "E-5", "F-5", "G-5", "A-5", "B-5", "C-6", "D-6", "E-6", "F-6", "G-6"],
                 params: {
